@@ -20,7 +20,7 @@ The standard project folders are the following.  If these cannot be found, or if
 there are questions about this, please reach out to clarify:
 
 - User home: `~`
-- Project root: `~/repos/noodnik2/midi-manager`
+- Project root: `~/repos/noodnik2/digital-asset-manager`
 - Do not use any other base path under any circumstances
 
 #### Tracking Progress / Milestone Handoffs

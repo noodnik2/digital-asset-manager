@@ -48,14 +48,6 @@ Stop here and wait for review before proceeding.
 
   ---
 Step 2 — Scaffold (after type contract is approved):
-- src/shared/plugin-interface.ts — the plugin-author contract; the column and operation types defined here feed into AppServices
-- src/shared/types/asset.ts
-- src/shared/types/operation.ts
-
-Stop here and wait for review before proceeding.
-
-  ---
-Step 2 — Scaffold (after type contract is approved):
 
 Once the shared types are confirmed:
 

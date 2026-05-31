@@ -78,7 +78,8 @@
   --sidebar-w:      200px;
   --inspector-w:    320px;
   --row-h:          36px;
-  --row-h-compact:  28px;
+  --row-h-compact:  28px;   /* status bar only */
+  --row-h-item:     32px;   /* WS items, Library rows (base before two-line name expansion) */
 
   /* ────────── RADIUS ────────── */
   --r-sm:  4px;   /* inputs, buttons */
@@ -273,7 +274,7 @@ input:focus, select:focus, textarea:focus, .input:focus-within {
 /* Selection-rail row (DAW pattern) */
 .row-selected {
   background: var(--raised);
-  box-shadow: inset 2px 0 0 var(--amber);
+  box-shadow: inset 3px 0 0 var(--amber); /* 3px per spec (asset-list-item.md); CSS was 2px from MIDI Workbench */
 }
 
 /* Reduced motion */

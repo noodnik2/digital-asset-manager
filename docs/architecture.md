@@ -28,9 +28,10 @@ src/
 │       ├── stores/
 │       └── types/                                                                                                     
 └── shared/
-├── plugin-interface.ts
-├── types/
-│   ├── asset.ts
-│   └── operation.ts
-└── trpc-router-type.ts
+    ├── appservices.ts       # AppServices interface — technology-agnostic service contract for renderer
+    ├── plugin-interface.ts  # Plugin-author contract; MetadataPlugin, OperationPlugin, Plugin
+    ├── types/
+    │   ├── asset.ts         # Asset, AssetRow, ColumnDefinition, LibraryQuery, LibraryViewState
+    │   └── operation.ts     # OperationDefinition, ParameterDefinition, OperationResult, etc.
+    └── trpc-router-type.ts  # (future) tRPC router type exported for renderer type inference
 ```
