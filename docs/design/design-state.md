@@ -14,7 +14,7 @@ _Maintained by Designpowers orchestrator. Updated after every agent handoff._
 
 **Primary Success Metric:** The user can chain a full select → transform → inspect → export cycle without writing a script or leaving the application.
 
-**Brief:** `docs/designpowers/briefs/2026-05-17-digital-asset-manager-discovery.md`
+**Brief:** `docs/design/reference/brief.md`
 
 ---
 
@@ -26,22 +26,22 @@ _To be defined during design-strategy._
 
 ## Pipeline Status
 
-| Agent                  | Status     | Notes                                                                                                                                                                                                         |
-|------------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| design-discovery       | ✅ Complete | Brief approved 2026-05-21                                                                                                                                                                                     |
-| design-strategy        | ✅ Complete | Principles, working set model, experience map, constraints approved. Success metrics deferred — covered by brief §Success Criteria                                                                            |
-| design-taste           | ✅ Complete | Extracted from MIDI Workbench source. Profile at `docs/designpowers/taste/2026-05-23-digital-asset-manager-taste.md`. Layout model corrected to principles-only (DAM surface arrangement deferred to Task 1). |
-| inclusive-personas     | ✅ Complete | 4 personas. `docs/designpowers/personas/2026-05-23-digital-asset-manager-personas.md`                                                                                                                         |
-| research-planning      | ⬜ Pending  | —                                                                                                                                                                                                             |
-| inspiration-scouting   | ⬜ Pending  | —                                                                                                                                                                                                             |
-| ui-composition         | ⬜ Pending  | —                                                                                                                                                                                                             |
-| interaction-design     | ⬜ Pending  | —                                                                                                                                                                                                             |
-| accessible-content     | ⬜ Pending  | —                                                                                                                                                                                                             |
-| design-builder         | ⬜ Pending  | —                                                                                                                                                                                                             |
-| design-critic          | ⬜ Pending  | —                                                                                                                                                                                                             |
-| accessibility-reviewer | ⬜ Pending  | —                                                                                                                                                                                                             |
-| heuristic-evaluator    | ⬜ Pending  | —                                                                                                                                                                                                             |
-| design-handoff         | ⬜ Pending  | —                                                                                                                                                                                                             |
+| Agent                  | Status     | Notes                                                                                                                                                                      |
+|------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| design-discovery       | ✅ Complete | Brief approved 2026-05-21                                                                                                                                                  |
+| design-strategy        | ✅ Complete | Principles, working set model, experience map, constraints approved. Success metrics deferred — covered by brief §Success Criteria                                         |
+| design-taste           | ✅ Complete | Extracted from MIDI Workbench source. Profile at `docs/design/reference/taste.md`. Layout model corrected to principles-only (DAM surface arrangement deferred to Task 1). |
+| inclusive-personas     | ✅ Complete | 4 personas. `docs/design/reference/personas.md`                                                                                                                            |
+| research-planning      | ⬜ Pending  | —                                                                                                                                                                          |
+| inspiration-scouting   | ⬜ Pending  | —                                                                                                                                                                          |
+| ui-composition         | ⬜ Pending  | —                                                                                                                                                                          |
+| interaction-design     | ⬜ Pending  | —                                                                                                                                                                          |
+| accessible-content     | ⬜ Pending  | —                                                                                                                                                                          |
+| design-builder         | ⬜ Pending  | —                                                                                                                                                                          |
+| design-critic          | ⬜ Pending  | —                                                                                                                                                                          |
+| accessibility-reviewer | ⬜ Pending  | —                                                                                                                                                                          |
+| heuristic-evaluator    | ⬜ Pending  | —                                                                                                                                                                          |
+| design-handoff         | ⬜ Pending  | —                                                                                                                                                                          |
 
 ---
 
@@ -156,27 +156,27 @@ _None yet. Added as agents surface them._
 
 ## Artefact Index
 
-| Artefact                          | Path                                                                      | Status                           |
-|-----------------------------------|---------------------------------------------------------------------------|----------------------------------|
-| Design Brief                      | `docs/designpowers/briefs/2026-05-17-digital-asset-manager-discovery.md`  | ✅ Approved                       |
-| Design State                      | `design-state.md`                                                         | ✅ Active                         |
-| Design Strategy                   | `docs/designpowers/strategy/2026-05-21-digital-asset-manager-strategy.md` | ✅ Complete                       |
-| Design Plan                       | `docs/designpowers/plans/2026-05-23-digital-asset-manager-plan.md`        | ✅ Approved 2026-05-23            |
-| Taste Profile                     | `docs/designpowers/taste/2026-05-23-digital-asset-manager-taste.md`       | ✅ Complete                       |
-| Personas                          | `docs/designpowers/personas/2026-05-23-digital-asset-manager-personas.md` | ✅ Complete                       |
-| App Shell Spec                    | `designs/shell/app-shell.md`                                              | ✅ Complete — approved 2026-05-23 |
-| Library Pane Spec                 | `designs/library/library-layout.md`                                       | ✅ Complete — approved 2026-05-23 |
-| Working Set Pane Spec             | `designs/working-set/working-set-layout.md`                               | ✅ Complete — approved 2026-05-23 |
-| Library List Item Spec            | `designs/components/asset-list-item.md`                                   | ✅ Complete — approved 2026-05-23 |
-| Working Set Item Spec             | `designs/components/working-set-item.md`                                  | ✅ Complete — approved 2026-05-23 |
-| Selection Model                   | `designs/interactions/selection.md`                                       | ✅ Complete — approved 2026-05-23 |
-| Transfer Interaction              | `designs/interactions/transfer.md`                                        | ✅ Complete — approved 2026-05-25 |
-| Operation Palette                 | `designs/components/operation-palette.md`                                 | ✅ Complete — approved 2026-05-25 |
-| Operation Config Panel            | `designs/components/operation-config.md`                                  | ✅ Complete — approved 2026-05-25 |
-| Operation Progress & Outcome      | `designs/components/operation-progress.md`                                | ✅ Complete — approved 2026-05-25 |
-| Operation History & Session State | `designs/interactions/history.md`                                         | ✅ Complete — approved 2026-05-25 |
-| Operation Naming & Copy Standards | `designs/content/operation-copy.md`                                       | ✅ Complete — approved 2026-05-25 |
-| Keyboard Navigation Map           | `designs/accessibility/keyboard-map.md`                                   | ✅ Complete — approved 2026-05-25 |
+| Artefact                          | Path                                                  | Status                           |
+|-----------------------------------|-------------------------------------------------------|----------------------------------|
+| Design Brief                      | `docs/design/reference/brief.md`                      | ✅ Approved                       |
+| Design State                      | `docs/design/design-state.md`                         | ✅ Active                         |
+| Design Strategy                   | `docs/design/reference/strategy.md`                   | ✅ Complete                       |
+| Design Plan                       | `docs/design/reference/plan.md`                       | ✅ Approved 2026-05-23            |
+| Taste Profile                     | `docs/design/reference/taste.md`                      | ✅ Complete                       |
+| Personas                          | `docs/design/reference/personas.md`                   | ✅ Complete                       |
+| App Shell Spec                    | `docs/design/specs/shell/app-shell.md`                | ✅ Complete — approved 2026-05-23 |
+| Library Pane Spec                 | `docs/design/specs/library/library-layout.md`         | ✅ Complete — approved 2026-05-23 |
+| Working Set Pane Spec             | `docs/design/specs/working-set/working-set-layout.md` | ✅ Complete — approved 2026-05-23 |
+| Library List Item Spec            | `docs/design/specs/components/asset-list-item.md`     | ✅ Complete — approved 2026-05-23 |
+| Working Set Item Spec             | `docs/design/specs/components/working-set-item.md`    | ✅ Complete — approved 2026-05-23 |
+| Selection Model                   | `docs/design/specs/interactions/selection.md`         | ✅ Complete — approved 2026-05-23 |
+| Transfer Interaction              | `docs/design/specs/interactions/transfer.md`          | ✅ Complete — approved 2026-05-25 |
+| Operation Palette                 | `docs/design/specs/components/operation-palette.md`   | ✅ Complete — approved 2026-05-25 |
+| Operation Config Panel            | `docs/design/specs/components/operation-config.md`    | ✅ Complete — approved 2026-05-25 |
+| Operation Progress & Outcome      | `docs/design/specs/components/operation-progress.md`  | ✅ Complete — approved 2026-05-25 |
+| Operation History & Session State | `docs/design/specs/interactions/history.md`           | ✅ Complete — approved 2026-05-25 |
+| Operation Naming & Copy Standards | `docs/design/specs/content/operation-copy.md`         | ✅ Complete — approved 2026-05-25 |
+| Keyboard Navigation Map           | `docs/design/specs/accessibility/keyboard-map.md`     | ✅ Complete — approved 2026-05-25 |
 
 ---
 

@@ -4,7 +4,7 @@
 
 **Goal:** Design the core Library + Working Set application — the two persistent surfaces and the loop that connects them — for a single MIDI-first power user.
 
-**Design Direction:** `docs/designpowers/briefs/2026-05-17-digital-asset-manager-discovery.md` and `docs/designpowers/strategy/2026-05-21-digital-asset-manager-strategy.md`
+**Design Direction:** `docs/design/reference/brief.md` and `docs/design/reference/strategy.md`
 
 **Personas:** Primary — power-user owner-operator (brief §Users). Formal inclusive-personas pass is pending and must run before visual design begins. Ability spectrum requirements are in brief §Ability Spectrum Considerations.
 
@@ -12,7 +12,7 @@
 
 ## Task 1: App Shell & Navigation Model
 
-**Files:** `designs/shell/app-shell.md` (spec), component scaffolding TBD
+**Files:** `docs/design/specs/shell/app-shell.md` (spec), component scaffolding TBD
 
 Define the top-level application structure: two persistent surfaces (Library, Working Set), how they coexist spatially, and what global chrome exists (if any).
 
@@ -29,7 +29,7 @@ Define the top-level application structure: two persistent surfaces (Library, Wo
 
 ## Task 2: Library Pane — Layout & Information Architecture
 
-**Files:** `designs/library/library-layout.md`
+**Files:** `docs/design/specs/library/library-layout.md`
 
 Define how the collection is presented and navigated. The Library is the source of truth — always present, never mutated by operations.
 
@@ -47,7 +47,7 @@ Define how the collection is presented and navigated. The Library is the source 
 
 ## Task 3: Working Set Pane — Layout & Zone Structure
 
-**Files:** `designs/working-set/working-set-layout.md`
+**Files:** `docs/design/specs/working-set/working-set-layout.md`
 
 Define the Working Set surface. It has two zones: current contents and the operation interface. Output artifacts land in the Library — there is no output zone in the Working Set.
 
@@ -64,7 +64,7 @@ Define the Working Set surface. It has two zones: current contents and the opera
 
 ## Task 4: Asset List Item — Library Component
 
-**Files:** `designs/components/asset-list-item.md`
+**Files:** `docs/design/specs/components/asset-list-item.md`
 
 The repeating unit in the Library. Every design decision here compounds across the entire collection view.
 
@@ -82,7 +82,7 @@ The repeating unit in the Library. Every design decision here compounds across t
 
 ## Task 5: Asset Item — Working Set Component
 
-**Files:** `designs/components/working-set-item.md`
+**Files:** `docs/design/specs/components/working-set-item.md`
 
 Working Set items may need to differ from Library items — they carry operation context (was this input? output? modified?), and the set is typically smaller and more focused than the full Library.
 
@@ -99,7 +99,7 @@ Working Set items may need to differ from Library items — they carry operation
 
 ## Task 6: Selection Model & Interaction
 
-**Files:** `designs/interactions/selection.md`
+**Files:** `docs/design/specs/interactions/selection.md`
 
 Selection is the entry point to everything. It must be fast, flexible, and unambiguous.
 
@@ -117,7 +117,7 @@ Selection is the entry point to everything. It must be fast, flexible, and unamb
 
 ## Task 7: Library → Working Set Transfer
 
-**Files:** `designs/interactions/transfer.md`
+**Files:** `docs/design/specs/interactions/transfer.md`
 
 The gesture(s) for moving assets from Library into the Working Set. Must feel effortless — this is performed constantly.
 
@@ -135,7 +135,7 @@ The gesture(s) for moving assets from Library into the Working Set. Must feel ef
 
 ## Task 8: Operation Palette
 
-**Files:** `designs/components/operation-palette.md`
+**Files:** `docs/design/specs/components/operation-palette.md`
 
 The surface where the user chooses what to do with the Working Set. Operations are first-class objects — the palette is how the user builds their vocabulary.
 
@@ -153,7 +153,7 @@ The surface where the user chooses what to do with the Working Set. Operations a
 
 ## Task 9: Operation Configuration Panel
 
-**Files:** `designs/components/operation-config.md`
+**Files:** `docs/design/specs/components/operation-config.md`
 
 After an operation is selected, the user configures its parameters before running. This is where "I know what this will do before I do it" lives or dies.
 
@@ -171,7 +171,7 @@ After an operation is selected, the user configures its parameters before runnin
 
 ## Task 10: Operation Execution, Progress & Outcome
 
-**Files:** `designs/components/operation-progress.md`
+**Files:** `docs/design/specs/components/operation-progress.md`
 
 Operations are synchronous and modal. When an operation runs, that is the current thing. When it finishes, the surface transitions inline to a completion summary — then the app stops. The user decides what to do next. Output artifacts land in the Library.
 
@@ -190,7 +190,7 @@ Operations are synchronous and modal. When an operation runs, that is the curren
 
 ## Task 11: Operation History & Session State
 
-**Files:** `designs/interactions/history.md`
+**Files:** `docs/design/specs/interactions/history.md`
 
 The Working Set does not persist across sessions — each session starts with an empty Working Set. Within a session, operations have history. This task defines what is remembered during a session and how the user navigates it.
 
@@ -207,7 +207,7 @@ The Working Set does not persist across sessions — each session starts with an
 
 ## Task 12: Operation Naming & Copy Standards
 
-**Files:** `designs/content/operation-copy.md`
+**Files:** `docs/design/specs/content/operation-copy.md`
 
 Every operation name, label, and status string the user sees. Core UI vocabulary is generic — domain-specific language belongs to the plugin/module layer, not to the application shell.
 
@@ -225,7 +225,7 @@ Every operation name, label, and status string the user sees. Core UI vocabulary
 
 ## Task 13: Keyboard Navigation Map
 
-**Files:** `designs/accessibility/keyboard-map.md`
+**Files:** `docs/design/specs/accessibility/keyboard-map.md`
 
 A complete map of keyboard interactions for the full core loop. This is the source of truth for implementation and accessibility review.
 
