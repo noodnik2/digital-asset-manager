@@ -1,0 +1,211 @@
+/* Design tokens — copied from docs/design/reference/colors_and_type.css (source of truth).
+ * Update this file when the reference is updated. */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ────────── COLOR ────────── */
+
+  /* Backgrounds — layered by value, never by hue */
+  --canvas:   #0d0d0f;
+  --panel:    #141418;
+  --surface:  #1a1a21;
+  --raised:   #22222c;
+  --line:     #2a2a35;
+
+  /* Accents */
+  --amber:    #e8a030;
+  --amber-bg: rgba(232, 160, 48, 0.08);
+  --amber-hi: #f4b850;
+  --jade:     #4ade80;
+  --jade-bg:  rgba(74, 222, 128, 0.10);
+  --rose:     #f87171;
+  --rose-bg:  rgba(248, 113, 113, 0.10);
+
+  /* Text */
+  --snow:     #e8e8f0;
+  --fog:      #6b7080;
+  --slate:    #a0aec0;
+
+  /* Semantic — derived */
+  --fg:       var(--snow);
+  --fg-muted: var(--fog);
+  --fg-data:  var(--slate);
+  --bg:       var(--canvas);
+
+  --border:        var(--line);
+  --border-strong: #3a3a48;
+
+  --accent:  var(--amber);
+  --success: var(--jade);
+  --danger:  var(--rose);
+
+  /* ────────── TYPE ────────── */
+
+  --font-display: 'DM Serif Display', 'Times New Roman', serif;
+  --font-sans:    'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+
+  --text-display: 2.5rem;
+  --text-h1:      1.75rem;
+  --text-h2:      1.25rem;
+  --text-h3:      0.875rem;
+  --text-body:    0.875rem;
+  --text-small:   0.75rem;
+  --text-mono:    0.8125rem;
+
+  --leading-tight:  1.2;
+  --leading-normal: 1.5;
+  --tracking-tight: -0.01em;
+  --tracking-wide:  0.1em;
+
+  /* ────────── SPACING ────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-14: 56px;
+  --space-20: 80px;
+
+  --sidebar-w:     200px;
+  --inspector-w:   320px;
+  --row-h:          36px;
+  --row-h-compact:  28px;
+  --row-h-item:     32px;
+
+  /* ────────── RADIUS ────────── */
+  --r-sm:   4px;
+  --r-md:   6px;
+  --r-lg:   8px;
+  --r-pill: 999px;
+
+  /* ────────── SHADOW ────────── */
+  --shadow-1:    0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-2:    0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 0 1px var(--amber), 0 0 12px rgba(232, 160, 48, 0.25);
+  --shadow-glow-jade: 0 0 12px rgba(74, 222, 128, 0.35);
+
+  /* ────────── MOTION ────────── */
+  --ease:     cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 240ms;
+}
+
+/* ────────── BASE ────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+html, body {
+  background: var(--canvas);
+  color: var(--snow);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+button {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1;
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  background: var(--surface);
+  color: var(--snow);
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+button:hover { background: var(--raised); }
+button:active { transform: translateY(1px); }
+button:focus-visible { outline: 1px solid var(--amber); outline-offset: 2px; }
+button:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--fog);
+}
+.btn-ghost:hover { color: var(--snow); border-color: var(--border-strong); background: transparent; }
+
+input[type="text"],
+input[type="search"] {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  color: var(--snow);
+  padding: 5px 10px;
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease);
+  width: 100%;
+}
+input::placeholder { color: var(--fog); }
+input:focus { border-color: var(--amber); }
+
+/* Tag chip */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  font-size: var(--text-small);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--amber);
+  background: var(--amber-bg);
+  border-radius: var(--r-pill);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Type badge */
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--fog);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+}
+
+/* Selection rail (3px per spec) */
+.row-selected {
+  background: var(--raised);
+  box-shadow: inset 3px 0 0 var(--amber);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

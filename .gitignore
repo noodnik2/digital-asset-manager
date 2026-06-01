@@ -1,2 +1,8 @@
 *.iml
 *.idea
+.DS_Store
+
+node_modules/
+out/
+coverage/
+*.tsbuildinfo

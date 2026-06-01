@@ -70,5 +70,28 @@ Implement the UI first to validate UX before building backend logic.
 See `docs/architecture.md` for the source code folder structure.
 
 
--- OTHER SECTIONS HERE TBD – Claude to Fill In ---
+## Testing
+
+**Runner:** Vitest (configured in `vitest.config.ts`)  
+**Component tests:** `@testing-library/react` with jsdom  
+**Coverage:** `@vitest/coverage-v8`
+
+| Command | Purpose |
+|---|---|
+| `npm test` | Watch mode |
+| `npm run test:run` | Single run |
+| `npm run test:coverage` | Run + coverage report (enforces 80% threshold) |
+
+Coverage thresholds (lines and branches) are enforced by `vitest.config.ts`. **Do not lower them.**
+
+### TDD Enforcement
+
+Per `docs/rules/testing.md`: for every new feature or bug fix, write a failing test first, then write the minimum code to pass it. Never add code without a corresponding test. The 80% branch/line minimum must be maintained at all times — run `npm run test:coverage` after each change to verify.
+
+### Test file layout
+
+- Unit: `*.test.ts` colocated with source
+- Component: `*.test.tsx` colocated with component
+- Setup: `src/test-setup.ts` (jest-dom matchers)
+- Excluded from coverage: `src/renderer/src/main.tsx`, styles, type-only shared files
 

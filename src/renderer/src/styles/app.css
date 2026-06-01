@@ -1,0 +1,351 @@
+/* App shell and component styles */
+
+/* ── Shell ────────────────────────────────────────────────────────────── */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--canvas);
+}
+
+.app-panes {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-top: 2px solid transparent;
+  transition: opacity var(--dur-fast) var(--ease),
+              border-top-color var(--dur-fast) var(--ease);
+}
+
+.pane--library    { flex: 58; }
+.pane--working-set { flex: 42; }
+
+.pane--active { border-top-color: var(--amber); }
+.pane:not(.pane--active) { opacity: 0.85; }
+
+.pane-divider {
+  width: 1px;
+  flex-shrink: 0;
+  background: var(--line);
+}
+
+/* ── Status bar ───────────────────────────────────────────────────────── */
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--row-h-compact);
+  padding: 0 var(--space-3);
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.status-bar__count {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--fog);
+  white-space: nowrap;
+}
+
+.status-bar__sep {
+  width: 1px;
+  height: 14px;
+  background: var(--line);
+  flex-shrink: 0;
+}
+
+.status-bar__operation {
+  flex: 1;
+  font-size: var(--text-small);
+  color: var(--fog);
+}
+
+.status-bar__shortcuts {
+  margin-left: auto;
+  font-size: var(--text-small);
+  color: var(--fog);
+  white-space: nowrap;
+}
+
+/* ── Library pane ─────────────────────────────────────────────────────── */
+
+.library-pane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.library-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  height: var(--row-h);
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.library-toolbar__search {
+  flex: 1;
+  min-width: 0;
+}
+
+.library-toolbar__count {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--fog);
+  white-space: nowrap;
+  padding-left: var(--space-2);
+  border-left: 1px solid var(--line);
+}
+
+.library-list-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+}
+
+.library-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.library-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--panel);
+}
+
+.library-table th {
+  padding: 0 var(--space-3);
+  height: var(--row-h-compact);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--fog);
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.library-table th.col-numeric,
+.library-table th.col-duration,
+.library-table th.col-date {
+  text-align: right;
+}
+
+.library-table tbody tr {
+  border-bottom: 1px solid var(--line);
+  cursor: default;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.library-table tbody tr:hover {
+  background: var(--raised);
+}
+
+.library-table tbody tr.row-selected {
+  background: var(--raised);
+  box-shadow: inset 3px 0 0 var(--amber);
+  background-color: rgba(232, 160, 48, 0.06);
+}
+
+.library-table td {
+  padding: 0 var(--space-3);
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Name cell is two lines — expands row height */
+.library-table td.col-name {
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+
+.cell-name-primary {
+  font-size: var(--text-body);
+  color: var(--snow);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cell-name-secondary {
+  font-size: var(--text-small);
+  color: var(--fog);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+
+.cell-numeric,
+.cell-duration,
+.cell-date {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  color: var(--slate);
+  text-align: right;
+}
+
+.cell-tags {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.library-settings {
+  position: absolute;
+  bottom: var(--space-2);
+  left: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--fog);
+  background: transparent;
+  border: none;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease);
+  padding: 0;
+}
+
+.library-settings:hover { color: var(--snow); background: transparent; }
+.library-settings:focus-visible { outline: 1px solid var(--amber); outline-offset: 2px; }
+
+/* ── Working Set pane ─────────────────────────────────────────────────── */
+
+.ws-pane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ws-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  height: var(--row-h);
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.ws-toolbar__op-btn {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ws-toolbar__op-btn .btn-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ws-list-container {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.ws-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.ws-empty-state p {
+  font-size: var(--text-small);
+  color: var(--fog);
+  line-height: var(--leading-normal);
+}
+
+/* Working Set item */
+.ws-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--row-h-item);
+  padding: 0 var(--space-3);
+  border-bottom: 1px solid var(--line);
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.ws-item:hover { background: var(--raised); }
+.ws-item:hover .ws-item__remove { color: var(--snow); }
+
+.ws-item:focus-within { outline: none; }
+.ws-item:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: -2px;
+}
+
+.ws-item__filename {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-body);
+  color: var(--snow);
+}
+
+.ws-item__duration {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--slate);
+  white-space: nowrap;
+  min-width: 36px;
+  text-align: right;
+}
+
+.ws-item__remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--fog);
+  background: transparent;
+  border: none;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.ws-item__remove:hover { color: var(--snow); background: transparent; }
+.ws-item__remove:focus-visible { outline: 1px solid var(--amber); outline-offset: 2px; }

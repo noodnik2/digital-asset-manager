@@ -14,6 +14,14 @@ you have clear ideas about how to proceed, but again - DO NOT IMPLEMENT THESE GA
 
 ### Context Management
 
+#### Work Inside of 50% Context
+
+To get the best results, it's crucial to keep your context within 50% of the total available.
+
+You MUST stay aware of your usage of context.  When context approaches 50% full, bring that fact to the
+attention of the requestor and, unless otherwise instructed, take actions to save your memory and advise
+the requestor to clear context and resume work from a fresh session.
+
 #### Project Folders
 
 The standard project folders are the following.  If these cannot be found, or if for any reason  
