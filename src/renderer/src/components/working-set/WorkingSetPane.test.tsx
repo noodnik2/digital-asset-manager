@@ -22,10 +22,10 @@ function makeServices(initial: WorkingSetItem[] = []): AppServices {
   }
 }
 
-function renderPane(services: AppServices, onCountChange = vi.fn()) {
+function renderPane(services: AppServices, onCountChange = vi.fn(), refreshKey?: number) {
   return render(
     <ServicesContext.Provider value={services}>
-      <WorkingSetPane onCountChange={onCountChange} />
+      <WorkingSetPane onCountChange={onCountChange} refreshKey={refreshKey} />
     </ServicesContext.Provider>,
   )
 }
@@ -97,5 +97,29 @@ describe('WorkingSetPane', () => {
     renderPane(makeServices([item1]))
     await screen.findByText('groove-01')
     expect(screen.getByRole('button', { name: /Select operation/ })).not.toBeDisabled()
+  })
+
+  describe('refreshKey', () => {
+    it('re-fetches items when refreshKey changes (stable onCountChange)', async () => {
+      const services = makeServices([item1])
+      const stableOnCountChange = vi.fn()
+      const { rerender } = render(
+        <ServicesContext.Provider value={services}>
+          <WorkingSetPane onCountChange={stableOnCountChange} refreshKey={0} />
+        </ServicesContext.Provider>,
+      )
+      await screen.findByText('groove-01')
+      const callsBefore = (services.workingSet.getItems as ReturnType<typeof vi.fn>).mock.calls.length
+      // Rerender with same onCountChange (stable) but incremented refreshKey
+      rerender(
+        <ServicesContext.Provider value={services}>
+          <WorkingSetPane onCountChange={stableOnCountChange} refreshKey={1} />
+        </ServicesContext.Provider>,
+      )
+      await waitFor(() =>
+        expect((services.workingSet.getItems as ReturnType<typeof vi.fn>).mock.calls.length)
+          .toBeGreaterThan(callsBefore),
+      )
+    })
   })
 })

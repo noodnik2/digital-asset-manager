@@ -6,9 +6,10 @@ import type { WorkingSetItem as WsItem } from '@shared/appservices'
 
 interface WorkingSetPaneProps {
   onCountChange: (count: number) => void
+  refreshKey?: number
 }
 
-export function WorkingSetPane({ onCountChange }: WorkingSetPaneProps) {
+export function WorkingSetPane({ onCountChange, refreshKey }: WorkingSetPaneProps) {
   const services = useServices()
   const [items, setItems] = useState<WsItem[]>([])
 
@@ -18,7 +19,7 @@ export function WorkingSetPane({ onCountChange }: WorkingSetPaneProps) {
     onCountChange(result.length)
   }, [services, onCountChange])
 
-  useEffect(() => { refresh() }, [refresh])
+  useEffect(() => { refresh() }, [refresh, refreshKey])
 
   const handleRemove = async (assetId: string) => {
     await services.workingSet.removeAsset(assetId)

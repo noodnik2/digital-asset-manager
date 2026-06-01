@@ -3,9 +3,10 @@ import type { AssetRow, AssetCell, ColumnDefinition } from '@shared/types/asset'
 interface AssetListItemProps {
   row: AssetRow
   columns: ColumnDefinition[]
+  onRowClick?: (id: string, e: React.MouseEvent) => void
 }
 
-export function AssetListItem({ row, columns }: AssetListItemProps) {
+export function AssetListItem({ row, columns, onRowClick }: AssetListItemProps) {
   const visibleCols = columns.filter(c => c.visible)
   const cellMap = new Map(row.cells.map(c => [c.columnId, c]))
 
@@ -14,6 +15,7 @@ export function AssetListItem({ row, columns }: AssetListItemProps) {
       className={row.selected ? 'row-selected' : ''}
       aria-selected={row.selected}
       role="row"
+      onClick={onRowClick ? (e) => onRowClick(row.id, e) : undefined}
     >
       {visibleCols.map(col => {
         const cell = cellMap.get(col.id)

@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { describe, it, expect, vi } from 'vitest'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { AssetListItem } from './AssetListItem'
 import type { AssetRow, ColumnDefinition } from '@shared/types/asset'
 
@@ -194,6 +194,32 @@ describe('AssetListItem', () => {
       wrap(<AssetListItem row={row([])} columns={[col({ id: 'name' })]} />)
       // Should not crash; td should be present with no content
       expect(screen.getByRole('row')).toBeInTheDocument()
+    })
+  })
+
+  describe('onRowClick', () => {
+    it('calls onRowClick with row id and event when clicked', () => {
+      const handler = vi.fn()
+      wrap(
+        <AssetListItem
+          row={row([{ columnId: 'name', value: 'x' }])}
+          columns={[col({ id: 'name' })]}
+          onRowClick={handler}
+        />
+      )
+      fireEvent.click(screen.getByRole('row'))
+      expect(handler).toHaveBeenCalledOnce()
+      expect(handler).toHaveBeenCalledWith('test', expect.any(Object))
+    })
+
+    it('does not throw when onRowClick is not provided', () => {
+      wrap(
+        <AssetListItem
+          row={row([{ columnId: 'name', value: 'x' }])}
+          columns={[col({ id: 'name' })]}
+        />
+      )
+      expect(() => fireEvent.click(screen.getByRole('row'))).not.toThrow()
     })
   })
 })

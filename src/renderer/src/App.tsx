@@ -10,6 +10,7 @@ type PaneId = 'library' | 'working-set'
 export default function App() {
   const [activePane, setActivePane] = useState<PaneId>('library')
   const [wsItemCount, setWsItemCount] = useState(0)
+  const [wsRefreshKey, setWsRefreshKey] = useState(0)
 
   // ⌘1 / ⌘2 pane switching (app-shell spec, Task 1)
   useEffect(() => {
@@ -26,6 +27,10 @@ export default function App() {
     setWsItemCount(count)
   }, [])
 
+  const handleAssetsTransferred = useCallback(() => {
+    setWsRefreshKey(k => k + 1)
+  }, [])
+
   return (
     <ServicesContext.Provider value={mockServices}>
       <div className="app-shell">
@@ -37,7 +42,7 @@ export default function App() {
             aria-current={activePane === 'library' ? 'true' : undefined}
             onClick={() => setActivePane('library')}
           >
-            <LibraryPane />
+            <LibraryPane onAssetsTransferred={handleAssetsTransferred} />
           </div>
 
           <div className="pane-divider" aria-hidden="true" />
@@ -49,7 +54,7 @@ export default function App() {
             aria-current={activePane === 'working-set' ? 'true' : undefined}
             onClick={() => setActivePane('working-set')}
           >
-            <WorkingSetPane onCountChange={handleWsCountChange} />
+            <WorkingSetPane onCountChange={handleWsCountChange} refreshKey={wsRefreshKey} />
           </div>
         </div>
 

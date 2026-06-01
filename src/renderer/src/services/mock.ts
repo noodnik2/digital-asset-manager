@@ -179,7 +179,7 @@ function formatDate(iso: string): string {
   return d.toISOString().split('T')[0]
 }
 
-function assetToRow(asset: Asset, selectedIds: Set<string>): AssetRow {
+function assetToRow(asset: Asset): AssetRow {
   const cells: AssetCell[] = [
     { columnId: 'name',     value: asset.filename, secondaryValue: asset.folderPath },
     { columnId: 'type',     value: asset.fileType },
@@ -191,7 +191,7 @@ function assetToRow(asset: Asset, selectedIds: Set<string>): AssetRow {
   return {
     id: asset.id,
     cells,
-    selected: selectedIds.has(asset.id),
+    selected: false,
     columnOrder: ['name', 'type', 'duration', 'size', 'tags', 'modified'],
   }
 }
@@ -216,14 +216,13 @@ function applyQuery(assets: Asset[], query: LibraryQuery): Asset[] {
 // ── Mock AppServices ──────────────────────────────────────────────────────────
 
 let savedQuery: LibraryQuery = { sortColumn: 'modified', sortDirection: 'desc' }
-const selectedIds = new Set<string>()
 
 export const mockServices: AppServices = {
   library: {
     async query(query: LibraryQuery): Promise<LibraryViewState> {
       const filtered = applyQuery(ASSETS, query)
       return {
-        items: filtered.map(a => assetToRow(a, selectedIds)),
+        items: filtered.map(a => assetToRow(a)),
         totalCount: ASSETS.length,
         filteredCount: filtered.length,
         columns: COLUMNS,

@@ -19,7 +19,10 @@ function viewState(overrides?: Partial<LibraryViewState>): LibraryViewState {
   return { items: [], totalCount: 0, filteredCount: 0, columns: COLUMNS, ...overrides }
 }
 
-function makeServices(queryFn?: AppServices['library']['query']): AppServices {
+function makeServices(
+  queryFn?: AppServices['library']['query'],
+  addAssetsFn?: AppServices['workingSet']['addAssets'],
+): AppServices {
   return {
     library: {
       query: queryFn ?? vi.fn(async () => viewState()),
@@ -29,17 +32,33 @@ function makeServices(queryFn?: AppServices['library']['query']): AppServices {
       getSavedQuery: vi.fn(async () => ({ sortColumn: 'modified', sortDirection: 'desc' as const })),
       saveQuery: vi.fn(async () => {}),
     },
-    workingSet: {} as AppServices['workingSet'],
+    workingSet: {
+      addAssets: addAssetsFn ?? vi.fn(async () => ({ added: [], skipped: [] })),
+      getItems: vi.fn(async () => []),
+      removeAsset: vi.fn(async () => {}),
+      clear: vi.fn(async () => {}),
+    },
     operations: {} as AppServices['operations'],
   }
 }
 
-function renderPane(services: AppServices) {
+function renderPane(services: AppServices, onAssetsTransferred?: () => void) {
   return render(
     <ServicesContext.Provider value={services}>
-      <LibraryPane />
+      <LibraryPane onAssetsTransferred={onAssetsTransferred} />
     </ServicesContext.Provider>,
   )
+}
+
+function twoRowState(): LibraryViewState {
+  return viewState({
+    totalCount: 2,
+    filteredCount: 2,
+    items: [
+      { id: 'a', selected: false, columnOrder: ['name'], cells: [{ columnId: 'name', value: 'asset-a' }] },
+      { id: 'b', selected: false, columnOrder: ['name'], cells: [{ columnId: 'name', value: 'asset-b' }] },
+    ],
+  })
 }
 
 describe('LibraryPane', () => {
@@ -158,6 +177,131 @@ describe('LibraryPane', () => {
       const neverResolves = vi.fn(() => new Promise<LibraryViewState>(() => {}))
       const { container } = renderPane(makeServices(neverResolves as unknown as AppServices['library']['query']))
       expect(container.firstChild).toBeNull()
+    })
+  })
+
+  describe('row selection', () => {
+    it('click selects a row (adds row-selected class)', async () => {
+      renderPane(makeServices(vi.fn(async () => twoRowState())))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      expect(screen.getByText('asset-a').closest('tr')).toHaveClass('row-selected')
+    })
+
+    it('click on one row deselects the other', async () => {
+      renderPane(makeServices(vi.fn(async () => twoRowState())))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      fireEvent.click(screen.getByText('asset-b').closest('tr')!)
+      expect(screen.getByText('asset-a').closest('tr')).not.toHaveClass('row-selected')
+      expect(screen.getByText('asset-b').closest('tr')).toHaveClass('row-selected')
+    })
+
+    it('cmd-click adds a second row without clearing the first', async () => {
+      renderPane(makeServices(vi.fn(async () => twoRowState())))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      fireEvent.click(screen.getByText('asset-b').closest('tr')!, { metaKey: true })
+      expect(screen.getByText('asset-a').closest('tr')).toHaveClass('row-selected')
+      expect(screen.getByText('asset-b').closest('tr')).toHaveClass('row-selected')
+    })
+
+    it('cmd-click on a selected row deselects it', async () => {
+      renderPane(makeServices(vi.fn(async () => twoRowState())))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!, { metaKey: true })
+      expect(screen.getByText('asset-a').closest('tr')).not.toHaveClass('row-selected')
+    })
+
+    it('shift-click selects a range', async () => {
+      const threeRowState = viewState({
+        totalCount: 3, filteredCount: 3,
+        items: [
+          { id: 'a', selected: false, columnOrder: ['name'], cells: [{ columnId: 'name', value: 'asset-a' }] },
+          { id: 'b', selected: false, columnOrder: ['name'], cells: [{ columnId: 'name', value: 'asset-b' }] },
+          { id: 'c', selected: false, columnOrder: ['name'], cells: [{ columnId: 'name', value: 'asset-c' }] },
+        ],
+      })
+      renderPane(makeServices(vi.fn(async () => threeRowState)))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      fireEvent.click(screen.getByText('asset-c').closest('tr')!, { shiftKey: true })
+      expect(screen.getByText('asset-a').closest('tr')).toHaveClass('row-selected')
+      expect(screen.getByText('asset-b').closest('tr')).toHaveClass('row-selected')
+      expect(screen.getByText('asset-c').closest('tr')).toHaveClass('row-selected')
+    })
+  })
+
+  describe('count label with selection', () => {
+    it('shows selection count prefix when items are selected', async () => {
+      renderPane(makeServices(vi.fn(async () => twoRowState())))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      await waitFor(() => expect(screen.getByText('1 selected · 2 items')).toBeInTheDocument())
+    })
+
+    it('shows selection count with filter context', async () => {
+      const filteredState = viewState({
+        totalCount: 7, filteredCount: 2,
+        items: [
+          { id: 'a', selected: false, columnOrder: ['name'], cells: [{ columnId: 'name', value: 'asset-a' }] },
+          { id: 'b', selected: false, columnOrder: ['name'], cells: [{ columnId: 'name', value: 'asset-b' }] },
+        ],
+      })
+      renderPane(makeServices(vi.fn(async () => filteredState)))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      await waitFor(() => expect(screen.getByText('1 selected · 2 of 7')).toBeInTheDocument())
+    })
+
+    it('clears selection count display after search changes', async () => {
+      renderPane(makeServices(vi.fn(async () => twoRowState())))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      await waitFor(() => screen.getByText('1 selected · 2 items'))
+      fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'x' } })
+      await waitFor(() => expect(screen.queryByText(/selected/)).toBeNull())
+    })
+  })
+
+  describe('⌘→ transfer', () => {
+    it('calls addAssets with selected ids on ⌘→', async () => {
+      const addAssets = vi.fn(async () => ({ added: ['a'], skipped: [] }))
+      renderPane(makeServices(vi.fn(async () => twoRowState()), addAssets))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      fireEvent.keyDown(document, { key: 'ArrowRight', metaKey: true })
+      await waitFor(() => expect(addAssets).toHaveBeenCalledWith(['a']))
+    })
+
+    it('calls onAssetsTransferred callback after transfer', async () => {
+      const onTransferred = vi.fn()
+      renderPane(makeServices(vi.fn(async () => twoRowState())), onTransferred)
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)
+      fireEvent.keyDown(document, { key: 'ArrowRight', metaKey: true })
+      await waitFor(() => expect(onTransferred).toHaveBeenCalledOnce())
+    })
+
+    it('transfers focused (anchor) item when nothing is selected', async () => {
+      const addAssets = vi.fn(async () => ({ added: ['a'], skipped: [] }))
+      // cmd-click to select then deselect, leaving anchor set but nothing selected
+      renderPane(makeServices(vi.fn(async () => twoRowState()), addAssets))
+      await screen.findByText('asset-a')
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!)        // select a, anchor=a
+      fireEvent.click(screen.getByText('asset-a').closest('tr')!, { metaKey: true }) // deselect a
+      fireEvent.keyDown(document, { key: 'ArrowRight', metaKey: true })
+      await waitFor(() => expect(addAssets).toHaveBeenCalledWith(['a']))
+    })
+
+    it('does nothing on ⌘→ when selection is empty and no anchor', async () => {
+      const addAssets = vi.fn(async () => ({ added: [], skipped: [] }))
+      renderPane(makeServices(vi.fn(async () => twoRowState()), addAssets))
+      await screen.findByText('asset-a')
+      fireEvent.keyDown(document, { key: 'ArrowRight', metaKey: true })
+      await new Promise(r => setTimeout(r, 50))
+      expect(addAssets).not.toHaveBeenCalled()
     })
   })
 })
