@@ -133,6 +133,26 @@ describe('mockServices.library', () => {
       await expect(mockServices.library.setColumnVisible('type', false)).resolves.toBeUndefined()
     })
   })
+
+  describe('checkIntegrity', () => {
+    it('returns allOk:true and empty issues for empty list', async () => {
+      const result = await mockServices.library.checkIntegrity([])
+      expect(result.allOk).toBe(true)
+      expect(result.issues).toEqual([])
+    })
+
+    it('returns allOk:true for known asset ids (mock always reports ok)', async () => {
+      const result = await mockServices.library.checkIntegrity(['1', '2'])
+      expect(result.allOk).toBe(true)
+      expect(result.issues).toHaveLength(0)
+    })
+
+    it('result shape has allOk boolean and issues array', async () => {
+      const result = await mockServices.library.checkIntegrity(['1'])
+      expect(typeof result.allOk).toBe('boolean')
+      expect(Array.isArray(result.issues)).toBe(true)
+    })
+  })
 })
 
 // ── workingSet ───────────────────────────────────────────────────────────────

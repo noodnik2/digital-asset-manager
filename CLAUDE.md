@@ -23,7 +23,11 @@ Agents MUST read and follow guidelines provided here and elsewhere, as they beco
 
 ## Current Phase of Development
 
-The current phase of development is planning implementation based upon the [design specifications](#design-specs).
+Milestone 3 complete (2026-05-31): library selection + working set transfer (158 tests, 97%/93% coverage).
+Milestone 4 is next — likely operation palette or sort/filter UI.
+
+At session start, read [`docs/milestones/milestone-3.md`](docs/milestones/milestone-3.md) for open flags and
+deferred features that carry into M4.
 
 ## Evolution of This File
 
@@ -32,12 +36,13 @@ maintain a correct understanding of the evolving codebase, and focus on implemen
 
 ## Design specs
 
-All implementation must conform to the approved design. Before writing any UI code, read:
+All implementation must conform to the approved design. Load docs in this order — stop when you have what you need:
 
-- [Decisions with rationale; authoritative on any "why"](docs/design/design-state.md) 
-- [Component and interaction specs for every surface](docs/design/specs/) 
-- [Visual language (colors, spacing, typography)](docs/design/reference/taste.md) 
-- [Design principles that govern tradeoffs](docs/design/reference/strategy.md)
+1. **Any UI work:** [`docs/design/essentials.md`](docs/design/essentials.md) — compact token and pattern reference (read this first, always)
+2. **The component you're implementing:** its spec from [`docs/design/specs/`](docs/design/specs/) (e.g. `specs/library/library-layout.md`)
+3. **Visual/layout decisions on a new surface:** [`docs/design/reference/taste.md`](docs/design/reference/taste.md)
+4. **Design principles / product tradeoffs:** [`docs/design/reference/strategy.md`](docs/design/reference/strategy.md)
+5. **Past decisions and rationale:** [`docs/design/design-state.md`](docs/design/design-state.md)
 
 ## Tech stack
 
@@ -76,10 +81,10 @@ See `docs/architecture.md` for the source code folder structure.
 **Component tests:** `@testing-library/react` with jsdom  
 **Coverage:** `@vitest/coverage-v8`
 
-| Command | Purpose |
-|---|---|
-| `npm test` | Watch mode |
-| `npm run test:run` | Single run |
+| Command                 | Purpose                                        |
+|-------------------------|------------------------------------------------|
+| `npm test`              | Watch mode                                     |
+| `npm run test:run`      | Single run                                     |
 | `npm run test:coverage` | Run + coverage report (enforces 80% threshold) |
 
 Coverage thresholds (lines and branches) are enforced by `vitest.config.ts`. **Do not lower them.**

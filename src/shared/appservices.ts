@@ -4,7 +4,7 @@
 //
 // The interface grows only to support features defined in the design specs or explicitly requested.
 
-import type { AssetId, LibraryQuery, LibraryViewState, ColumnDefinition } from './types/asset';
+import type { AssetId, LibraryQuery, LibraryViewState, ColumnDefinition, IntegrityCheckResult } from './types/asset';
 import type {
   OperationId,
   SavedOperationId,
@@ -47,6 +47,11 @@ export interface LibraryService {
   // be different (e.g. handled by the transport layer instead).
   getSavedQuery(): Promise<LibraryQuery>;
   saveQuery(query: LibraryQuery): Promise<void>;
+
+  // Pre-execution integrity gate: compares each asset's current filesystem mtime and size
+  // against the indexed values. Returns immediately; does not re-index.
+  // 'modified' = mtime or size differs; 'missing' = file not found at absolutePath.
+  checkIntegrity(assetIds: AssetId[]): Promise<IntegrityCheckResult>;
 }
 
 // ──────────────────────────────────────

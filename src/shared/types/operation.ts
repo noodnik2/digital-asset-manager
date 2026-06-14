@@ -14,7 +14,7 @@ export type FileOperationStatus = 'pending' | 'running' | 'success' | 'failed';
 // 'partial' = some files succeeded, some failed
 export type OperationOutcome = 'success' | 'partial' | 'failed' | 'cancelled';
 
-export type OperationModalStep = 'palette' | 'config' | 'running' | 'complete';
+export type OperationModalStep = 'palette' | 'config' | 'integrity-check' | 'running' | 'complete';
 
 // ──────────────────────────────────────
 // Parameter model (plugin → shell)

@@ -264,7 +264,11 @@ Fixed at the bottom. Height: 48px. Background: `--panel`. Border-top: 1px `--lin
 - **Style:** Primary amber button (`--amber` background, dark text `#1a1206`, weight 600, `--r-sm`)
 - **Keyboard:** `⌘Return` — confirmed here, forwarded to Task 13 for the canonical map
 - **Disabled only when:** a required parameter field is empty (the only case). All other parameters have plugin-provided defaults; this state should be rare.
-- **Behavior:** Clicking Run immediately transitions the modal to the Running state (Task 10). No intermediate confirmation.
+- **Behavior:** Clicking Run triggers an asset integrity check against all Working Set items. If all
+  assets pass (mtime and size match the indexed values, file exists at its path), the modal transitions
+  directly to Running. If any asset is missing or modified, the modal shows the integrity-check step
+  instead — the user must choose to proceed, cancel, or update the index before execution begins.
+  See `docs/design/specs/interactions/asset-integrity.md`.
 
 ### Save as named…
 
@@ -378,8 +382,9 @@ Starting condition: palette step, an operation selected (Return pressed), Config
 1. Focus lands on first parameter input
 2. Type or arrow-key the value; Tab to next parameter; repeat until all parameters set
 3. Tab to `[Browse…]` in output destination — confirm the path or activate Browse to change
-4. `⌘Return` → Run
-5. Modal transitions to Running state (Task 10)
+4. `⌘Return` → Run (triggers integrity check)
+5. If all assets pass: modal transitions to Running state (Task 10)
+5. If issues found: modal shows integrity-check step; choose action before continuing
 
 Total steps with default values already correct: `⌘Return` immediately (1 keystroke) — defaults are pre-filled and valid.
 

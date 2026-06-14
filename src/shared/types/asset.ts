@@ -94,3 +94,21 @@ export interface LibraryViewState {
   filteredCount: number;               // after search + filter; equals totalCount when no active query
   columns: ColumnDefinition[];
 }
+
+// ──────────────────────────────────────
+// Asset integrity (pre-execution check)
+// ──────────────────────────────────────
+
+export type AssetIntegrityStatus = 'ok' | 'modified' | 'missing';
+
+export interface AssetIntegrityIssue {
+  assetId: AssetId;
+  filename: string;     // without extension, for display
+  extension: string;
+  status: Exclude<AssetIntegrityStatus, 'ok'>;
+}
+
+export interface IntegrityCheckResult {
+  allOk: boolean;
+  issues: AssetIntegrityIssue[];
+}

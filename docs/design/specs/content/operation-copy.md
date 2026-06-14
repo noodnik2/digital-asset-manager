@@ -93,22 +93,25 @@ Canonical labels for all interactive controls rendered by the application shell.
 
 ### Operation modal
 
-| Action | Canonical label | Notes |
-|---|---|---|
-| Open modal — no operation selected | `⚡ Select Operation ▾` | Button in Working Set toolbar. `⚡` is the operation anchor icon established in Task 3. |
-| Open modal — operation configured | `⚡ [Operation Name] ▾` | Same button; label updates to show the plugin-provided name. |
-| Return to palette from config | `← Change operation` | Text-weight link in Config header. Lowercase "operation" — not the plugin-provided name. |
-| Close modal (not running) | `×` | Icon button. `aria-label="Close"`. |
-| Close modal (running, triggers abort) | `×` | Same button; `aria-label="Abort operation"` during Running state. |
-| Run the operation | `Run ⚡` | Primary amber button. Keyboard: `⌘Return`. |
-| Stop a running operation | `Abort` | Ghost button, footer of Running state. |
-| Dismiss abort confirmation, continue | `Keep running` | Ghost button. Takes focus on confirmation appear. |
-| Confirm abort | `Abort` | `--rose` button inside the abort confirmation. |
-| Dismiss complete or cancelled modal | `Close` | Ghost button. Takes focus on transition to Complete/Cancelled. |
-| Save configuration with a name | `Save as named…` | Text-weight link in Config footer. |
-| Choose a folder via native picker | `Browse…` | Ghost button next to output path field. |
-| Load output into Working Set | `Load output into Working Set` | Text-weight link in Flavor A Complete footer. Full label — not shortened. |
-| Search Library for operation output | `Search for recent output →` | `--amber`, 13px. When plugin declares `outputLocator`: label unchanged. When app uses time-based fallback: `Search: items added this session`. |
+| Action                                | Canonical label                | Notes                                                                                                                                          |
+|---------------------------------------|--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| Open modal — no operation selected    | `⚡ Select Operation ▾`         | Button in Working Set toolbar. `⚡` is the operation anchor icon established in Task 3.                                                         |
+| Open modal — operation configured     | `⚡ [Operation Name] ▾`         | Same button; label updates to show the plugin-provided name.                                                                                   |
+| Return to palette from config         | `← Change operation`           | Text-weight link in Config header. Lowercase "operation" — not the plugin-provided name.                                                       |
+| Close modal (not running)             | `×`                            | Icon button. `aria-label="Close"`.                                                                                                             |
+| Close modal (running, triggers abort) | `×`                            | Same button; `aria-label="Abort operation"` during Running state.                                                                              |
+| Run the operation                     | `Run ⚡`                        | Primary amber button. Keyboard: `⌘Return`. Triggers integrity check before advancing to Running.                                               |
+| Stop a running operation              | `Abort`                        | Ghost button, footer of Running state.                                                                                                         |
+| Proceed past integrity warning        | `Proceed Anyway`               | Primary amber button in integrity-check step. Advances to Running without re-scanning.                                                         |
+| Return to config from integrity check | `Cancel`                       | Ghost button in integrity-check step. Returns to Config step; preserves all parameter values.                                                  |
+| Re-scan flagged files                 | `Update Index`                 | Text-weight link in integrity-check step. Re-scans affected assets; if all OK, proceeds silently to Running.                                   |
+| Dismiss abort confirmation, continue  | `Keep running`                 | Ghost button. Takes focus on confirmation appear.                                                                                              |
+| Confirm abort                         | `Abort`                        | `--rose` button inside the abort confirmation.                                                                                                 |
+| Dismiss complete or cancelled modal   | `Close`                        | Ghost button. Takes focus on transition to Complete/Cancelled.                                                                                 |
+| Save configuration with a name        | `Save as named…`               | Text-weight link in Config footer.                                                                                                             |
+| Choose a folder via native picker     | `Browse…`                      | Ghost button next to output path field.                                                                                                        |
+| Load output into Working Set          | `Load output into Working Set` | Text-weight link in Flavor A Complete footer. Full label — not shortened.                                                                      |
+| Search Library for operation output   | `Search for recent output →`   | `--amber`, 13px. When plugin declares `outputLocator`: label unchanged. When app uses time-based fallback: `Search: items added this session`. |
 
 ### Library pane
 
@@ -136,14 +139,15 @@ All status messages use `[Operation Name]` as a placeholder for the plugin-provi
 
 ### Modal header states
 
-| Modal state | Header text |
-|---|---|
-| Palette step | `Select Operation` |
-| Config step | `[Operation Name]` |
-| Running | `[Operation Name] — Running` |
-| Complete (all succeeded) | `[Operation Name] — Complete` |
-| Complete (with failures) | `[Operation Name] — Complete` |
-| Cancelled | `[Operation Name] — Cancelled` |
+| Modal state              | Header text                        |
+|--------------------------|------------------------------------|
+| Palette step             | `Select Operation`                 |
+| Config step              | `[Operation Name]`                 |
+| Integrity-check step     | `[Operation Name] — Files Changed` |
+| Running                  | `[Operation Name] — Running`       |
+| Complete (all succeeded) | `[Operation Name] — Complete`      |
+| Complete (with failures) | `[Operation Name] — Complete`      |
+| Cancelled                | `[Operation Name] — Cancelled`     |
 
 The em dash with surrounding spaces ( ` — ` ) is the separator between the operation name and the state word in all cases.
 
@@ -273,6 +277,48 @@ The link label adapts:
 ```
 
 `--fog`, 14px, centered in the list area. Established in Task 8. Reproduced here as canonical.
+
+---
+
+## Asset Integrity Warning
+
+Copy for the integrity-check modal step. Triggered when one or more Working Set assets have changed
+or are missing since last indexed. See `docs/design/specs/interactions/asset-integrity.md` for full
+layout and behavior.
+
+### Introductory text (above file list)
+
+```
+These items have changed since they were added to your library.
+Review them before running the operation.
+```
+
+Two sentences. `--fog`, 14px. Generic — applies to any mix of `missing` and `modified` items.
+
+### Status badge labels
+
+| Status | Badge label | Notes |
+|---|---|---|
+| `missing` | `missing` | File not found at its indexed path |
+| `modified` | `modified` | File size or modification time differs from the indexed record |
+
+Lowercase. Monospace font (`--font-mono`). Badge color: `missing` → `--rose`; `modified` → `--amber`.
+
+### Caution line (below file list)
+
+```
+If you proceed, results may be unexpected.
+```
+
+`--fog`, 14px. Always shown, regardless of which status types are present.
+
+### Screen reader announcement on step entry
+
+```
+"[Operation name] — files have changed. [N] items need review before the operation can run."
+```
+
+`role="alertdialog"` on the modal content area. `[N]` = count of items with issues.
 
 ---
 

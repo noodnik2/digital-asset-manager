@@ -145,6 +145,8 @@ _To be defined during design-strategy._
 | `Home`/`End` confirmed in Library list, WS list, and Palette list                                                                               | Standard list navigation; no reason to exclude; Task 8 forwarded confirmation to Task 13                                                                                                 | design-lead    | 2026-05-25 |
 | `Return` in WS items list opens operation modal                                                                                                 | WS items have no other Return action; semantically "proceed with this set"; no-op when WS empty                                                                                          | User direction | 2026-05-25 |
 | `Delete`/`Backspace` in WS items list removes focused item                                                                                      | Standard macOS list removal pattern; specific to WS (not defined in Library list); no undo                                                                                               | User direction | 2026-05-25 |
+| Pre-execution integrity check: mtime + size fingerprint; silent on success; `integrity-check` modal step shown only when issues found           | Uses fields already indexed (`modifiedAt`, `size`) — no schema change; detects moves, deletions, and overwrites without the cost of reading file content; cryptographic hash deferred    | User direction | 2026-06-14 |
+| Integrity check trigger: `Run ⚡` in Config step; three responses: Proceed Anyway / Cancel (back to Config) / Update Index (re-scan + continue)  | Blocking gate before any operation runs; `[Cancel]` is the safe-default focus; `[Proceed Anyway]` is explicit acknowledgment of risk                                                     | User direction | 2026-06-14 |
 
 ---
 
@@ -177,6 +179,7 @@ _None yet. Added as agents surface them._
 | Operation History & Session State | `docs/design/specs/interactions/history.md`           | ✅ Complete — approved 2026-05-25 |
 | Operation Naming & Copy Standards | `docs/design/specs/content/operation-copy.md`         | ✅ Complete — approved 2026-05-25 |
 | Keyboard Navigation Map           | `docs/design/specs/accessibility/keyboard-map.md`     | ✅ Complete — approved 2026-05-25 |
+| Asset Integrity Check             | `docs/design/specs/interactions/asset-integrity.md`   | ✅ Complete — approved 2026-06-14 |
 
 ---
 

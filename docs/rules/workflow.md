@@ -6,21 +6,18 @@ This file lays out rules and the expectations related to orchestration of develo
 
 ### Implement Only What's Specifically Asked For and is Well Understood
 
-Implement only the features that are needed to complete the task at hand, and only according to written requirements
-that you have received, reviewed and completely understand.  NEVER implement features or make decisions regarding
-filling gaps which appear necessary due to incomplete written requirements or designs; always point these gaps
-out to the requestor and ask for clarification.  You can make recommendations for how to fill in the gaps when
-you have clear ideas about how to proceed, but again - DO NOT IMPLEMENT THESE GAPS without specific approval.
+Implement only features needed to complete the current task, and only according to written requirements
+that you have received and understand.  NEVER implement features or make decisions regarding gaps or
+conflicts in written requirements or designs; always point these gaps out to the requestor and ask for
+clarification.  You can make recommendations for how to fill in the gaps when you have clear ideas about
+how to proceed, but again - DO NOT IMPLEMENT THESE GAPS without specific approval.
 
 ### Context Management
 
 #### Work Inside of 50% Context
 
-To get the best results, it's crucial to keep your context within 50% of the total available.
-
-You MUST stay aware of your usage of context.  When context approaches 50% full, bring that fact to the
-attention of the requestor and, unless otherwise instructed, take actions to save your memory and advise
-the requestor to clear context and resume work from a fresh session.
+As soon as possible after your context exceeds 50% full, you MUST save your working memory, and advise
+the requestor to `/clear` or start a new session before continuing.
 
 #### Project Folders
 
@@ -33,21 +30,21 @@ there are questions about this, please reach out to clarify:
 
 #### Tracking Progress / Milestone Handoffs
 
-At the end of every major milestone, please summarize the progress made and any technical decisions taken into a new
-`docs/milestones/milestone-X.md` file before clearing context.  This will be used to help ensure continuity of development
-and effective communication between the various agents collaborating on the project.
+At the end of every major milestone, please summarize the progress made and any technical decisions taken into
+a new `docs/milestones/milestone-X.md` file before clearing context.  This will be used to help ensure continuity
+of development and effective communication between the various agents collaborating on the project.
 
 Also, keep the larger project context in mind (e.g., what's written in `docs/design`) when preparing this
-communication hand-off.  Bring disparities or "drift" noticed from the larger plan to the forefront of attention
-within this and other avenues of communication.  It is important to maintain focus on - and to regularly update - the
-larger "plan" as the project evolves.
+communication hand-off.  Bring disparities or "drift" noticed from the larger plan to the forefront of
+attention within this and other avenues of communication.  It is important to maintain focus on - and to
+regularly update - the larger "plan" as the project evolves.
 
 #### Resumption of Context
 
-When starting with fresh context (e.g., after context is cleared from a previous workflow - see above), please read
-and analyze the recent hand-off document(s) found in the folder `docs/milestones`.  Confirm you understand the plan
-or clarify anything that is unclear or contradictory before starting work on a new milestone or workflow after having
-done this.
+When starting with fresh context (e.g., after context is cleared from a previous workflow - see above), please
+read and analyze the recent hand-off document(s) found in the folder `docs/milestones`.  Confirm you understand
+the plan or clarify anything that is unclear or contradictory before starting work on a new milestone or workflow
+after having done this.
 
 #### Accumulation of Context
 

@@ -9,6 +9,7 @@ import type {
   ColumnDefinition,
   LibraryQuery,
   LibraryViewState,
+  IntegrityCheckResult,
 } from '@shared/types/asset'
 import type {
   OperationDefinition,
@@ -238,6 +239,9 @@ export const mockServices: AppServices = {
     },
     async saveQuery(q: LibraryQuery) {
       savedQuery = q
+    },
+    async checkIntegrity(_assetIds: string[]): Promise<IntegrityCheckResult> {
+      return { allOk: true, issues: [] }
     },
   },
 
