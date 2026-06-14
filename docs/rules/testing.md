@@ -2,10 +2,21 @@
 
 ## Test-Driven Development
 
-You MUST follow a test-driven development (TDD) approach in which for each new feature or bug fix,
-you first write a test that fails, working iteratively towards passing test(s) as part of the
-development process.  A separate test case MUST be written to demonstrate each functional aspect,
-behavior, or edge case of the feature or bug fix.
+You MUST follow a test-driven development (TDD) approach. The required order is strict and
+non-negotiable:
+
+1. **Write the test first** — referencing the function, method, or type that does not yet exist.
+2. **Run the test and confirm it fails (red)** — `npm run test:run`. If the test passes before any
+   implementation is written, it is not testing anything meaningful. Stop and fix the test.
+3. **Write the minimum implementation to make the test pass (green).**
+4. **Run `npm run test:coverage`** — confirm coverage stays ≥ 80% lines and branches.
+
+A separate test case MUST be written to demonstrate each functional aspect, behavior, or edge case
+of the feature or bug fix.
+
+**Anti-pattern to avoid:** Writing all type definitions, interfaces, and implementation code first,
+then adding tests that pass on their first run. This is not TDD — the tests describe the code after
+the fact rather than driving it. It has happened in this project and is explicitly prohibited.
 
 ## Automated Tests – Unit, Component, and Integration Testing
 
